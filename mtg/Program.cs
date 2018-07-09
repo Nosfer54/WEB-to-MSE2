@@ -19,7 +19,7 @@ namespace mtg
 {
     class Program
     {
-        public static string DownLoadSet(string SetCode, string WZUrl, string MTGUrl, List<Card> Cards, int CountCards)
+        public static string DownLoadSet(string SetCode, string WZUrl, string MTGUrl, List<Card> Cards, int CountCards, int MaxSetCard)
         {
             string SetLocation = "c:/sets/" + SetCode + "/" + SetCode;
             WebClient MTG = new WebClient();
@@ -86,8 +86,22 @@ namespace mtg
                     }
                 }
 
+                if (Cards[i].Type.Contains("Сага"))
+                    Cards[i].stylesheet = "magic-m15-saga";
+                else if (Cards[i].Type.Contains("Plan"))
+                    Cards[i].stylesheet = "m15-planeswalker";
+                else
+                    Cards[i].stylesheet = "m15-flavor-bar";
+
+                if (i < 10)
+                    Cards[i].NumberOfSet = "00" + i + "/" + MaxSetCard;
+                else if (i < 100)
+                    Cards[i].NumberOfSet = "0" + i + "/" + MaxSetCard;
+                else
+                    Cards[i].NumberOfSet = i + "/" + MaxSetCard;
+
                 File.AppendAllText(SetLocation, "card:" + Environment.NewLine);
-                File.AppendAllText(SetLocation, "\tstylesheet: m15-flavor-bar" + Environment.NewLine);
+                File.AppendAllText(SetLocation, "\tstylesheet: " + Cards[i].stylesheet + Environment.NewLine);
                 File.AppendAllText(SetLocation, "\thas styling: true" + Environment.NewLine);
                 File.AppendAllText(SetLocation, "\tstyling data:" + Environment.NewLine);
                 File.AppendAllText(SetLocation, "\t\tchop top: 7" + Environment.NewLine);
@@ -107,10 +121,12 @@ namespace mtg
                 {
                     File.AppendAllText(SetLocation, "\tsub type: " + Cards[i].Type.Split('-')[1].Trim() + Environment.NewLine);
                 }
-                File.AppendAllText(SetLocation, "\trule text: " + Cards[i].FileImg + Environment.NewLine);
-                File.AppendAllText(SetLocation, "\tflavor text: " + Cards[i].FileImg + Environment.NewLine);
+                File.AppendAllText(SetLocation, "\trule text: " + "Проверочный текст (всякий разный)" + Environment.NewLine);
+                File.AppendAllText(SetLocation, "\tflavor text: " + "Проверочное описание" + Environment.NewLine);
                 File.AppendAllText(SetLocation, "\tpower: " + Environment.NewLine);
                 File.AppendAllText(SetLocation, "\ttoughness: " + Environment.NewLine);
+
+                File.AppendAllText(SetLocation, "\tcustom card number: " + Cards[i].NumberOfSet + Environment.NewLine);
             }
             
             string result = "Сэт обработан";
@@ -131,7 +147,7 @@ namespace mtg
 
             List<Card> m19 = new List<Card>();
             
-            DownLoadSet(SetCode, WZUrl, MTGUrl, m19, 280);            
+            DownLoadSet(SetCode, WZUrl, MTGUrl, m19, 280, 269);            
 
             Console.WriteLine("Тыкни любую пимпу...");
             Console.ReadKey();
