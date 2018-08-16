@@ -273,7 +273,7 @@ namespace mtg
                 File.AppendAllText(SetLocation, "\tstyling data:" + Environment.NewLine);
                 if (!Cards[i].Type.Contains("Planeswalker") && !Cards[i].Type.Contains("Сага")) { File.AppendAllText(SetLocation, "\t\tchop top: 7" + Environment.NewLine); }
                 if (!Cards[i].Type.Contains("Planeswalker") && !Cards[i].Type.Contains("Сага")) { File.AppendAllText(SetLocation, "\t\tchop bottom: 7" + Environment.NewLine); }
-                if (!Cards[i].Type.Contains("Planeswalker") && !Cards[i].Type.Contains("Сага")) { File.AppendAllText(SetLocation, "\t\tflavor bar offset: 40" + Environment.NewLine); }
+                if (!Cards[i].Type.Contains("Planeswalker") && !Cards[i].Type.Contains("Сага")) { File.AppendAllText(SetLocation, "\t\tflavor bar offset: 0" + Environment.NewLine); }
                 if (Cards[i].Type.Contains("Сага")) { File.AppendAllText(SetLocation, "\t\tchapter textboxes: " + Cards[i].TextBoxes + Environment.NewLine); }
                 if (Cards[i].Type.Contains("Сага")) { File.AppendAllText(SetLocation, "\t\tchapter number coordinates: " + "208,329,370," + Environment.NewLine); }
                 File.AppendAllText(SetLocation, "\t\ttext box mana symbols: magic-mana-small.mse-symbol-font" + Environment.NewLine);
